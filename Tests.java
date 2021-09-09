@@ -12,9 +12,12 @@ public class Tests extends BaseWebTest {
 
     @Test
     public void verifyFailedTransaction() {
-
+        homePage.clickOnAcceptCookiesIfPresent();
         homePage.clickProduct();
-
+        homePage.clickOnBuyNowButton();
+        homePage.fillInDeliveryForm();
+        homePage.clickToProceedToPayment();
+        homePage.fillInPaymentForm();
     }
 
 }
