@@ -1,6 +1,7 @@
 package com.patricia.pages;
 
 import com.patricia.basics.WebDriverHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.stereotype.Component;
@@ -8,8 +9,10 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component
+@Slf4j
 public class DeliveryPage extends DeliveryPageLocators{
     public void fillInDeliveryForm(){
+        log.info("Filling in delivery form");
         waitUntilDeliveryPageIsLoaded();
         fillInPhoneNumber();
 //        fillInRandomPhoneNumber();
@@ -22,13 +25,13 @@ public class DeliveryPage extends DeliveryPageLocators{
     }
 
     public void clickToProceedToPayment(){
+        log.info("Saving delivery data and proceeding to payment");
         WebDriverHolder.getWait()
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(PROCEED_TO_PAYMENT))).click();
     }
 
-
-
     public void waitUntilDeliveryPageIsLoaded(){
+        log.info("Waiting for delivery form to be loaded");
         WebDriverHolder.getWait()
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(".dynamic-checkout__content")));
     }
@@ -37,14 +40,12 @@ public class DeliveryPage extends DeliveryPageLocators{
         WebDriverHolder.getWebDriver()
                 .findElement(By.cssSelector(PHONE_NUMBER_FIELD))
                 .sendKeys("17675899935");
-
     }
 
     public void fillInRandomPhoneNumber(){
         WebDriverHolder.getWebDriver()
                 .findElement(By.cssSelector(PHONE_NUMBER_FIELD))
                 .sendKeys(generateRandomPhoneNumber());
-
     }
 
     public void fillInFirstName(){
@@ -52,6 +53,7 @@ public class DeliveryPage extends DeliveryPageLocators{
                 .findElement(By.cssSelector(FIRST_NAME_FIELD))
                 .sendKeys("RandomFirstName");
     }
+
     public void fillInLastName(){
         WebDriverHolder.getWebDriver()
                 .findElement(By.cssSelector(LAST_NAME_FIELD))

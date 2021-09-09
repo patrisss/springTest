@@ -28,5 +28,4 @@ public class Tests extends BaseWebTest {
         deliveryPage.clickToProceedToPayment();
         paymentPage.fillInPaymentForm();
     }
-
 }
