@@ -14,8 +14,7 @@ public class DeliveryPage extends DeliveryPageLocators{
     public void fillInDeliveryForm(){
         log.info("Filling in delivery form");
         waitUntilDeliveryPageIsLoaded();
-        fillInPhoneNumber();
-//        fillInRandomPhoneNumber();
+        fillInRandomPhoneNumber();
         fillInFirstName();
         fillInLastName();
         fillInAddress();
@@ -35,13 +34,7 @@ public class DeliveryPage extends DeliveryPageLocators{
         WebDriverHolder.getWait()
                 .until(ExpectedConditions.elementToBeClickable(By.cssSelector(".dynamic-checkout__content")));
     }
-
-    public void fillInPhoneNumber(){
-        WebDriverHolder.getWebDriver()
-                .findElement(By.cssSelector(PHONE_NUMBER_FIELD))
-                .sendKeys("17675899935");
-    }
-
+    
     public void fillInRandomPhoneNumber(){
         WebDriverHolder.getWebDriver()
                 .findElement(By.cssSelector(PHONE_NUMBER_FIELD))
@@ -79,6 +72,7 @@ public class DeliveryPage extends DeliveryPageLocators{
     }
 
     public void clickOnSaveButton(){
+        log.info("Saving shipping details");
         WebDriverHolder.getWebDriver()
                 .findElement(By.cssSelector(SAVE_SHIPPING_DETAILS_BUTTON))
                 .click();
@@ -90,12 +84,11 @@ public class DeliveryPage extends DeliveryPageLocators{
     }
 
     static String generateRandomPhoneNumber(){
-        String phoneNumber = "";
         String randomPart = "";
-        int maxPhoneLength = 11;
+        int maxPhoneLength = 10;
         for(int i = 0; i < maxPhoneLength; i++){
             randomPart = randomPart + getRandomNumberBetween(0, 9);
         }
-        return phoneNumber;
+        return randomPart;
     }
 }
