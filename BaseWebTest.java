@@ -1,29 +1,33 @@
-package com.patricia.SpringBasic;
+package com.patricia.basics;
 
+import com.patricia.config.Config;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 
-import java.lang.reflect.Method;
+
 @Slf4j
-class BaseWebTest {
+@ContextConfiguration(classes = Config.class)
+public class BaseWebTest extends AbstractTestNGSpringContextTests {
 
+    @Value("${browser}")
+    private String browser;
+    @Value("${url}")
+    private String url;
+    @Value("${timeout}")
+    private Integer timeout;
 
-    @BeforeTest
-    public static void main(String[] args) {
-        System.setProperty("webdriver.chrome.driver", Utils.CHROME_DRIVER_LOCATION);
+    @BeforeMethod(alwaysRun = true)
+    public void setupBrowser() {
+        WebDriverHolder.setWebDriver(BrowserFactory.getBrowser(browser),timeout);
+        WebDriverHolder.getWebDriver().navigate().to(url);
     }
 
-    protected static final WebDriver driver = new ChromeDriver();
-
-    @BeforeTest
-    public static void openPage(){ driver.get(Utils.BASE_URL);
-    }
-
-    @AfterTest
-    public static void closeBrowser(){
-        driver.close();
+    @AfterTest(alwaysRun = true)
+    public static void closeBrowser() {
+        WebDriverHolder.getWebDriver().close();
     }
 }
